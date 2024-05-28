@@ -1,0 +1,54 @@
+SHOW DATABASES;
+
+USE myProject;
+
+DESC product;
+
+SELECT * FROM product;
+
+#========추가 수정 삭제=========
+/*
+SHOW DATABASES;
+
+USE myProject;
+
+DESC product;
+
+SELECT * FROM product;
+
+INSERT INTO product(id,NAME, DESCRIPTION, price)
+					VALUES(UUID(), '마우스', '정말 좋은 마우스입니다', 15000);
+					
+INSERT INTO product(id,NAME, DESCRIPTION, price)
+					VALUES(UUID(), '노트북', '최신 맥북', 20000);
+					
+INSERT INTO product(id,NAME, DESCRIPTION, price)
+					VALUES(UUID(), '셔츠', '깔끔한 셔츠입니다', 30000);
+					
+DELETE FROM product
+WHERE NAME ='셔츠';
+
+UPDATE product 
+	SET price = 18000
+	WHERE NAME = '마우스';	
+*/
+	
+#==========조인==========
+/*
+SELECT * 
+	FROM product_saleslocation;
+	
+INSERT INTO product_saleslocation(id, address, addressDetail, lat, lng, meetingTime)
+				VALUES(UUID(), '구로구', '구로구 단지', 37.241723, 127.192387, '2024-05-14')
+;
+UPDATE product
+	SET productSaleslocationId ='ac955b41-11cf-11ef-886a-0242ac110002'
+	WHERE id = '196b232f-11ce-11ef-886a-0242ac110002';
+*/
+
+SELECT p.id, name, price, address, addressDetail AS '상세주소'
+	FROM product p, product_saleslocation ps
+		WHERE p.productSaleslocationId = ps.id;
+		
+#=========== 추가 기능들===========
+

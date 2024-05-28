@@ -1,0 +1,17 @@
+{
+  "name": "class",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "index": "ts-node index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "pg": "^8.11.5",
+    "ts-node": "^10.9.2",
+    "typeorm": "^0.3.20"
+  }
+}

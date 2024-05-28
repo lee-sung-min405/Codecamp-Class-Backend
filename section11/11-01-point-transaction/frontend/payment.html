@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>결제페이지</title>
+
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+    <!--axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        const requestPay = () => {
+            const IMP = window.IMP;
+            IMP.init("imp14427165"); // 예: 'imp00000000'
+
+            IMP.request_pay(
+              {
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
+                name: "[국내백화점/당일발송] 루이비통 멀티플 슬렌더 월릿 모노그램 다미에 블루 남자 반지갑",
+                amount: 949000,
+                buyer_email: "gildong@gmail.com",
+                buyer_name: "이성민",
+                buyer_tel: "010-8586-6968",
+                buyer_addr: "부산광역시 사상구 진사로 28번길 25 바움 303호",
+                buyer_postcode: "01181",
+              },
+              function (response) {
+                // 결제 종료 시 호출되는 콜백 함수
+                if(response.success){
+                    //결제 성공시 로직
+                    alert("결제에 성공했습니다!!!!");
+                    
+                    axios.post("http://localhost:3000/points-transactions",
+                    {
+                      //바디 부분
+                      impUid: response.imp_uid,
+                      amount: response.paid_amount
+                    },
+                    {
+                      //헤더 부분
+                      headers: {
+                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZmY4YTM0ZS1lOGE2LTRkOGUtOWZiYS1mZTBmNGRmZmJkYjYiLCJpYXQiOjE3MTY4ODI2MzEsImV4cCI6MTcxNjg4NjIzMX0.yPVvxi1bcAbyPtV03NBCQsj6aCk228XKftdN_z17W1Y"
+                      }
+                    })
+                    .then((res) => {
+                      console.log('서버 응답:', res.data);
+                    })
+                    .catch((error) => {
+                      console.error('서버 에러:', error);
+                    });
+                } else {
+                    //결제 실패 시 로직
+                    alert("결제에 실패했습니다!! 다시 시도해주세요!!");
+                }
+              },
+            );
+        }
+    </script>
+
+</head>
+<body>
+    <button onclick="requestPay()">결제하기</button>
+</body>
+</html>

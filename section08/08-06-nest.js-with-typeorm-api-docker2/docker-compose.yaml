@@ -1,0 +1,26 @@
+version: '3.7'
+
+# 컴퓨터들
+services:
+
+  # 컴퓨터이름
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/myfolder/src
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env.docker
+
+  # 컴퓨터이름
+  database:
+    # platform: linux/amd64
+    image: mariadb:latest
+    environment:
+      MARIADB_DATABASE: "mydocker"
+      MARIADB_ROOT_PASSWORD: "aroundhub12#"
+    ports:
+      - "3306:3306"
